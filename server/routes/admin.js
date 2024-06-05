@@ -41,7 +41,7 @@ router.get("/:id/student/:studId/queries",getStudentQueries);
 
 // Get answers of a specific alumni
 router.get("/:id/alumni/:alumId/answers", getAlumniAnswers);
-
+router.get("/companies", getAllQueries);
 /* UPDATE */
 router.post("/addCompany", addCompany);
 // Remove a student

@@ -135,3 +135,12 @@ export const addStudentQueries = async (req, res) => {
         res.status(500).json({ error: err.message });
       }
   };
+  export const getFeedCompanies = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const companies = await Company.find();
+        res.status(200).json(companies);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};

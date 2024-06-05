@@ -104,7 +104,7 @@ export const removeAlumni = async (req, res) => {
 //Working fine
 export const addCompany = async (req, res) => {
     try {
-        const { id } = req.params;
+        // const { id } = req.params;
         
       const { companyName,location } = req.body;   //picturePath pending
 

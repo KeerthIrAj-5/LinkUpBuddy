@@ -8,6 +8,7 @@ import {
   addRemoveBookmarks,
   removeStudentQueries,
   addStudentQueries,
+  getFeedCompanies,
 } from "../controllers/student.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -41,5 +42,5 @@ router.patch("/:id/:companyId/bookmarks", addRemoveBookmarks);
 
 // Endpoint to add or remove queries for a student
 router.delete("/:id/:queryId/remove", removeStudentQueries);
-
+router.get("/:id/companies", getFeedCompanies);
 export default router;
