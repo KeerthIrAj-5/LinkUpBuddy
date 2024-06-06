@@ -139,7 +139,10 @@ export const addStudentQueries = async (req, res) => {
     try {
         const { id } = req.params;
         const companies = await Company.find();
-        res.status(200).json(companies);
+        const companyNames = companies.map(companies => companies.companyName);
+        const companyIds = companies.map(companies => companies._id);
+
+        res.status(200).json({companyNames,companyIds});
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
