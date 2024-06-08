@@ -38,14 +38,25 @@ export const getStudent = async (req, res) => {
     }
 };
 // Working fine
+// export const getStudentQueries = async (req, res) => {
+//     try {
+//         const { studId } = req.params;
+//         const student = await Student.findById(studId);
+//         const studentqueries = student.populate('queries');
+//         res.status(200).json(studentqueries);
+//     } catch (err) {
+//         res.status(404).json({ message: err.message });
+//     }
+// };
 export const getStudentQueries = async (req, res) => {
     try {
         const { studId } = req.params;
-        const student = await Student.findById(studId);
-        const studentqueries = student.populate('queries');
-        res.status(200).json(student.studentqueries);
+        const student = await Student.findById(studId).populate('queries');
+        if (!student)
+            return res.status(404).json({ message: "Student not found" });
+        res.status(200).json(student.queries);
     } catch (err) {
-        res.status(404).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 };
 //Working fine

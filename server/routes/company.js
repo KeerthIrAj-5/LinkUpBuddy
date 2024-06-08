@@ -11,7 +11,7 @@ router.get("/check", (req, res) => {
 
 /* READ */
 // Endpoint to get feed queries for a company
-router.get("/:companyId/queries", verifyToken, getCompanyQueries);
+router.get("/:id/queries",getCompanyQueries);
 
 // Endpoint to get user-specific queries for a company
 router.get("/:userId/:companyId/queries", verifyToken, getUserQueries);
