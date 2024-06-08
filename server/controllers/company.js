@@ -9,11 +9,19 @@ export const getCompanyQueries = async (req, res) => {
         const company = await Company.findById(id).populate('queries');
         if (!company)
             return res.status(404).json({ message: "Company not found" });
-        res.status(200).json(company.queries);
+        
+        // const queryTexts = company.queries.map(query => query.queryText);
+        // res.status(200).json(queryTexts);
+        const queriesWithAnswers = company.queries.map(query => ({
+            queryText: query.queryText,
+            answers: query.answers
+        }));
+        res.status(200).json(queriesWithAnswers);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
 /* READ */
 // export const getFeedQueries = async (req, res) => {
 //     try {
