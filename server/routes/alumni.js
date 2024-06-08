@@ -6,6 +6,7 @@ import {
   removeAlumniAnswers,
   addAlumniAnswers,
   removeAlumni, 
+  getAlumniQueries,
 } from "../controllers/alumni.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -22,6 +23,7 @@ router.get("/:id", getAlumni);
 
 // Get company by ID
 router.get("/:id/company/:companyId", getCompany);
+router.get("/:alumId/queries", getAlumniQueries);
 
 // Get alumni answers
 router.get("/:id/answers", getAlumniAnswers);
@@ -32,5 +34,5 @@ router.delete("/:id/remove", removeAlumni);
 
 // Remove alumni answers
 router.delete("/:id/:answerId/remove",removeAlumniAnswers);
-router.post("/:id/:queryId/answer", addAlumniAnswers);
+router.post("/:alumId/answer", addAlumniAnswers);
 export default router;

@@ -97,32 +97,72 @@ export const removeAlumniAnswers = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-//Working fine
-export const addAlumniAnswers = async (req, res) => {
+export const getAlumniQueries = async (req, res) => {
     try {
-        const { id,queryId} = req.params;
-        const { answerText } = req.body;
-        const alumni = await Alumni.findById(id);
-        if (!alumni) {
-            return res.status(404).json({ message: "Alumni not found." });
-        }
-        const query = await Queries.findById(queryId);
-        if (!query) {
-            return res.status(404).json({ message: "Query not found." });
-        }
-        const newAnswer = new Answers({
-            queryId : queryId,
-            alumniId : id,
-            answerText : answerText,
-          });
-          const savedAnswer = await newAnswer.save();
-          const answerId = savedAnswer._id 
-        query.answers.push(answerId);
-        await query.save(); 
-        alumni.answers.push(answerId);
-          await alumni.save();
-        res.status(201).json(savedAnswer);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+      const { alumId } = req.params;
+      const alumni = await Alumni.findById(alumId);
+      if (!alumni) {
+        return res.status(404).json({ message: "Alumni not found." });
       }
+  
+      const companyName = alumni.companyName;
+      const company = await Company.findOne({ companyName: companyName });
+      if (!company) {
+        return res.status(404).json({ message: "Company not found" });
+      }
+  
+      const companyId = company._id.toString();
+      const queries = await Queries.find({ companyId: companyId }).populate({
+        path:'studentId',
+        select: 'firstName lastName',
+        model: 'Student'
+      });
+      if (!queries || queries.length === 0) {
+        return res.status(404).json({ message: "No queries found for this company" });
+      }
+  
+      const queriesWithStudentName = queries.map(query => ({
+        queryText: query.queryText,
+        studentName: `${query.studentId.firstName} ${query.studentId.lastName}`,
+        _id: query._id
+      }));
+  
+      res.status(200).json(queriesWithStudentName);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
+  export const addAlumniAnswers = async (req, res) => {
+    try {
+      const { alumId } = req.params;
+      const alumni = await Alumni.findById(alumId);
+      if (!alumni) {
+        return res.status(404).json({ message: "Alumni not found." });
+      }
+  
+      const { queryId, answerText } = req.body;
+      const query = await Queries.findById(queryId);
+      if (!query) {
+        return res.status(404).json({ message: "Query not found." });
+      }
+  
+      const newAnswer = new Answers({
+        queryId,
+        alumniId: alumId,
+        answerText
+      });
+      const savedAnswer = await newAnswer.save();
+      const answerId = savedAnswer._id;
+      query.answers.push(answerId);
+      await query.save();
+      alumni.answers.push(answerId);
+      await alumni.save();
+  
+      res.status(201).json({
+        message: "Answer added successfully",
+        newAnswer: savedAnswer
+      });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
   };
