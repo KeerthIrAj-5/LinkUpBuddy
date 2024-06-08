@@ -1,5 +1,5 @@
 import express from "express";
-import { getCompanyQueries, getUserQueries } from "../controllers/company.js";
+import { getCompanyQueries } from "../controllers/company.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -14,6 +14,6 @@ router.get("/check", (req, res) => {
 router.get("/:id/queries",getCompanyQueries);
 
 // Endpoint to get user-specific queries for a company
-router.get("/:userId/:companyId/queries", verifyToken, getUserQueries);
+// router.get("/:userId/:companyId/queries", verifyToken, getUserQueries);
 
 export default router;

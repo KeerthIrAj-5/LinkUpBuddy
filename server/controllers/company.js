@@ -15,12 +15,12 @@ export const getCompanyQueries = async (req, res) => {
     }
 };
 /* READ */
-export const getFeedQueries = async (req, res) => {
-    try {
-        const queries = await Queries.find();
-        res.status(200).json(queries);
-    } catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-};
+// export const getFeedQueries = async (req, res) => {
+//     try {
+//         const queries = await Queries.find();
+//         res.status(200).json(queries);
+//     } catch (err) {
+//         res.status(404).json({ message: err.message });
+//     }
+// };
 

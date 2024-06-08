@@ -37,17 +37,15 @@ export const getStudent = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-// Working fine
-// export const getStudentQueries = async (req, res) => {
-//     try {
-//         const { studId } = req.params;
-//         const student = await Student.findById(studId);
-//         const studentqueries = student.populate('queries');
-//         res.status(200).json(studentqueries);
-//     } catch (err) {
-//         res.status(404).json({ message: err.message });
-//     }
-// };
+export const getCompany = async (req, res) => {
+    try {
+        const { companyId } = req.params;
+        const company = await Company.findById(companyId);
+        res.status(200).json(company);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
 export const getStudentQueries = async (req, res) => {
     try {
         const { studId } = req.params;

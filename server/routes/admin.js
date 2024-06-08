@@ -3,6 +3,7 @@ import {
   getAdmin,
   getStudent,
   getAlumni,
+  getCompany,
   getStudentQueries,
   removeQueries,
   removeStudent,
@@ -26,7 +27,7 @@ router.get("/check", (req, res) => {
 /* READ */
 // Get admin by ID
 router.get("/:id/admin", verifyToken,getAdmin);
-
+router.get("/:companyId/company",getCompany);
 // Get student by ID
 router.get("/:id/student/:studId", verifyToken, getStudent);
 

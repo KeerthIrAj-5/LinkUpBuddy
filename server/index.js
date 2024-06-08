@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.js";
 import alumniRoutes from "./routes/alumni.js";
 import studentRoutes from "./routes/student.js";
 import adminRoutes from "./routes/admin.js";
+import companyRoutes from "./routes/company.js";
 import queriesRoutes from "./routes/queries.js";
 import { registerAlumni, registerStudent } from "./controllers/auth.js";
 import dotenv from "dotenv";
@@ -50,6 +51,7 @@ app.use("/auth", authRoutes);
 app.use("/alumni", alumniRoutes);
 app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
+app.use("/company", companyRoutes);
 app.use("/queries", queriesRoutes);
 
 /* MONGOOSE SETUP */
