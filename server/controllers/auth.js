@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import Alumni from "../models/Alumni.js";
 import Student from "../models/Student.js";
 import Admin from "../models/Admin.js";
-
+import Company from "../models/Company.js"
 //Working fine
 /* REGISTER ALUMNI */
 export const registerAlumni = async (req, res) => {
@@ -20,6 +20,11 @@ export const registerAlumni = async (req, res) => {
       passoutYear,
     } = req.body;
 
+    const company = await Company.findOne({ companyName });
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
     const newAlumni = new Alumni({
@@ -33,12 +38,14 @@ export const registerAlumni = async (req, res) => {
       occupation,
       passoutYear,
     });
-    const savedAlumni = await newAlumni.save();res.status(201).json(savedAlumni);
+    const savedAlumni = await newAlumni.save();
+    res.status(201).json(savedAlumni);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 //Working fine
+
 /* REGISTER STUDENT*/
 export const registerStudent = async (req, res) => {
   try {

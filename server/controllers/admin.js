@@ -110,23 +110,24 @@ export const removeAlumni = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-//Working fine
 export const addCompany = async (req, res) => {
     try {
-        // const { id } = req.params;
-        
-      const { companyName,location } = req.body;   //picturePath pending
-
-      const  newCompany = new Company( { 
-        companyName : companyName, 
-        // picturePath : picturePath,
-        location : location,
-     }); 
-     const savedCompany = await newCompany.save();
-    res.status(201).json(savedCompany);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }    
+      const { companyName, location } = req.body;
+  
+      const company = await Company.findOne({ companyName });
+      if (company) {
+        return res.status(400).json({ message: "Company already exists" });
+      }
+  
+      const newCompany = new Company({
+        companyName,
+        location,
+      });
+      const savedCompany = await newCompany.save();
+      res.status(201).json(savedCompany);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   };
   //Working fine
 export const removeCompany = async (req, res) => {
