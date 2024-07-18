@@ -9,7 +9,6 @@ const CompanySchema = new mongoose.Schema({
     },
     picturePath: {
         type: String,
-        default: "",
     },
     location: String,
  
